@@ -65,8 +65,8 @@
 
         .item {
             position: absolute;
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
             background-size: contain;
             background-repeat: no-repeat;
         }
@@ -152,11 +152,13 @@
         let isJumping = false;
         let bgm = new Audio('./audios/game.mp3');
         bgm.loop = true;
+        let jumpSound = new Audio('./audios/jump.mp3');
+        let itemGetSound = new Audio('./audios/item-get.mp3');
 
         const obstacles = [
             { type: 'campfire', width: 40, height: 40, image: './images/campfire.png' },
-            { type: 'tent', width: 60, height: 60, image: './images/tent.png' },
-            { type: 'foodtruck', width: 70, height: 70, image: './images/food-truck.png' }
+            { type: 'wizard', width: 60, height: 60, image: './images/wizard.png' },
+            { type: 'spaceship', width: 70, height: 70, image: './images/spaceship.png' }
         ];
 
         const items = [
@@ -222,7 +224,7 @@
             itemEl.dataset.points = item.points;
             itemEl.style.backgroundImage = `url(${item.image})`;
             itemEl.style.left = gameContainer.offsetWidth + 'px';
-            itemEl.style.bottom = '170px';
+            itemEl.style.bottom = '150px';
             gameContainer.appendChild(itemEl);
 
             const moveItem = () => {
@@ -240,6 +242,7 @@
         }
 
         function jump() {
+            jumpSound.play().catch(error => console.log('Jump sound play failed:', error));
             if (isJumping) return;
             isJumping = true;
             player.classList.remove('running');
@@ -277,6 +280,7 @@
                     points += parseInt(item.dataset.points);
                     item.remove();
                     updateScore();
+                    itemGetSound.play().catch(error => console.log('Item get sound play failed:', error));
                 }
             });
 
