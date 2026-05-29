@@ -13,8 +13,12 @@
             box-sizing: border-box;
         }
 
+        html {
+            height: 100%;
+        }
+
         body {
-            height: 100vh;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,7 +32,6 @@
             width: 100%;
             height: 100%;
             max-width: 430px;
-            max-height: 932px;
             position: relative;
             background: #FFFAEC;
             overflow: hidden;
@@ -46,7 +49,6 @@
             width: 60px;
             height: 60px;
             position: absolute;
-            bottom: 50px;
             left: 50px;
             background-image: url('./images/Grappi-chan.png');
             background-size: contain;
@@ -114,7 +116,6 @@
 
         #ground {
             position: absolute;
-            bottom: 48px;
             left: 0;
             width: 100%;
             height: 2px;
@@ -138,6 +139,13 @@
     </div>
 
     <script>
+        // モバイルブラウザのvh問題を修正
+        function setVh() {
+            document.getElementById('game-container').style.height = window.innerHeight + 'px';
+        }
+        setVh();
+        window.addEventListener('resize', setVh);
+
         const player = document.getElementById('player');
         const gameContainer = document.getElementById('game-container');
         const startMessage = document.getElementById('start-message');
